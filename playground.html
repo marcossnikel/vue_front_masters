@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground — Complete Intro to Vue 3</title>
+  </head>
+  <body>
+    
+    <div id="app">
+      <p v-if="message.length % 2 === 0">Even : {{message.toUpperCase()}}</p>
+      <p v-else>Odd : {{message}}</p>
+      <ul v-for="item in listofNumbers">
+        <li >{{item.id}}</li>
+        <ul>
+          <li v-for="number in item.list">{{number}}</li>
+        </ul>
+      </ul>  
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const { createApp } = Vue
+
+
+      const app = createApp({
+        data() { //data in function to maintain the reactivity and just pull out the last instance of that object
+          return {
+            message: "Aobaasas",
+            listofNumbers : [
+              {name : 1, 
+                id: 
+                "d5eaaaf6-866b-413e-ad88-59c694ff6307",
+               list: [1,2,3] },
+              {name : 2, 
+                id: 
+                "e4997ae7-3503-4b0b-bb98-1c76bf4eb34b",
+               list: [1,2,3] },
+              {name : 3, 
+                id: 
+                "7f8e9b17-fd5a-4d72-ab9a-2646bde1d5f0",
+               list: [1,2,3] },
+              {name : 4, 
+                id: 
+                "6b8a5118-4e67-45d2-8e24-85201098fe15",
+               list: [1,2,3] },
+              {name : 5, 
+                id: 
+                "480cae9c-3bbf-4344-b4c9-278acb34b983",
+               list: [1,2,3] }]
+          }
+        }
+      })
+
+      app.mount("#app")
+    </script>
+  </body>
+</html>
