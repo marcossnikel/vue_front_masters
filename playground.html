@@ -9,6 +9,22 @@
   <body>
     
     <div id="app">
+      <h1>Counter</h1>
+      <p>Count : {{count}}</p>
+      <button v-on:click="incrementCount">Increment Count</button>
+      <h1>{{incrementAmount}}</h1>
+      <div>
+        <label for="incrementAmount">Increment By:</label>
+        <input type="number" 
+        v-model="incrementAmount"
+
+        >
+      </div>
+
+      <hr>
+
+
+      
       <p v-if="message.length % 2 === 0">Even : {{message.toUpperCase()}}</p>
       <p v-else>Odd : {{message}}</p>
       <ul v-for="item in listofNumbers">
@@ -17,6 +33,8 @@
           <li v-for="number in item.list">{{number}}</li>
         </ul>
       </ul>  
+      <hr/>
+
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -27,6 +45,8 @@
       const app = createApp({
         data() { //data in function to maintain the reactivity and just pull out the last instance of that object
           return {
+            count : 10,
+            incrementAmount : 8,
             message: "Aobaasas",
             listofNumbers : [
               {name : 1, 
@@ -49,6 +69,11 @@
                 id: 
                 "480cae9c-3bbf-4344-b4c9-278acb34b983",
                list: [1,2,3] }]
+          }
+        },
+        methods: {
+          incrementCount(){
+            this.count += this.incrementAmount
           }
         }
       })
