@@ -10,19 +10,17 @@
     
     <div id="app">
         <p>{{chars}}</p>
-    
-        <form action="">
-            <label for="charName">Char Name</label>
-            <input type="text" id="charName" v-model="newChar">
-            
-            <label for="charAge">Char Age</label>
-            <input type="text" id="charAge"><br>
-            <button @click="addNewChar(chars,newChar,$event)">Add New Char </button>
-        </form>
+        <pre>
+            {{newCharacter}}
+        </pre>
+            <label for="charName">Character Name</label>
+            <input type="text" id="charName" v-model="newCharacter.name"
+            @keyup.enter="addNewCharacter">
+            <!-- <button @click="addNewChar(chars,newCharacter,$event)">Add New Char </button> -->
         <p v-if="persons.show == true">No persons bro</p>
         
         <p v-else v-for=" person in persons.chars">Name : {{person.name}} <br> Age : {{person.age}}
-        <button @click="addCharToFavorite(favorites,person,$event)">Favorite Char</button>
+        <button @click="addCharToFavorite(person)">Favorite Char</button>
         </p>
         <div>
             <h3>Favorite Chacracters</h3>
@@ -49,7 +47,9 @@
 
     const app = createApp({
         data: () => ({
-             newChar : "",
+             newCharacter:{
+                name: '',
+             },
              chars : ['Luffy','Zoro','Nami'],
              favorites: [],
              persons: {
@@ -66,13 +66,11 @@
             }        
         }),
         methods:{
-            addCharToFavorite(favorites,charName,event){
-                favorites.push(charName)
+            addCharToFavorite(character){
+                this.favorites.push(character)
             },
-            addNewChar(chars,charName,event){
-                event.preventDefault()
-                console.log(chars,charName,event)
-                chars.push(charName)
+            addNewCharacter(){
+                this.chars.push(this.newCharacter.name)
             }
         }
     })
