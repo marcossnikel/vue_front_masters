@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One P</title>
+</head>
+<body>
+    
+    <div id="app">
+        <p v-if="persons.show == true">No persons bro</p>
+        <p v-else v-for=" person in persons.chars">Name : {{person.name}} <br> Age : {{person.age}}</p>
+    
+    <p>
+        <span v-for="(char,index) in persons.chars">
+            {{char.name}}{{index == persons.chars.length -1 ? "" : ","}}
+        </span>
+    </p>
+    
+    </div>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+    const {createApp} = Vue
+
+    const app = createApp({
+        data: () => ({
+             persons: {
+                    chars : [
+                       {name: 'Luffy',age: 18},
+                       {name: 'Zoro', age:22},
+                       {name: 'Nami', age:22},
+                       {name: 'Sanji', age: 28},
+                       {name: 'Robin' , age: 31},
+                       {name: 'Usopp',age: 23},
+                       {name: 'Katakuri',age:54}
+                    ],
+                    show : false
+            }        
+        })
+    })
+
+    app.mount("#app")
+    </script>
+</body>
+</html>
