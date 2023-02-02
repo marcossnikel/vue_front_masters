@@ -16,16 +16,22 @@
             <label for="charName">Character Name</label>
             <input type="text" id="charName" v-model="newCharacter.name"
             @keyup.enter="addNewCharacter">
+            <label for="">Age</label>
+            <input type="text" id="charName" v-model="newCharacter.age"
+            @keyup.enter="addNewCharacter">
             <!-- <button @click="addNewChar(chars,newCharacter,$event)">Add New Char </button> -->
         <p v-if="persons.show == true">No persons bro</p>
         
-        <p v-else v-for=" person in persons.chars">Name : {{person.name}} <br> Age : {{person.age}}
+        <p v-else v-for=" (person) in persons.chars">Name : {{person.name}} <br> Age : {{person.age}}
         <button @click="addCharToFavorite(person)">Favorite Char</button>
         </p>
         <div>
             <h3>Favorite Chacracters</h3>
             <ul>
-                <li v-for="char in favorites">{{char.name}}</li>
+                <li v-for="(char) in favorites">
+                    {{char.name}}
+                <button @click="removeFavorite(char)">Remove Favorite</button>
+                </li>
             </ul>
         </div>
 
@@ -49,9 +55,11 @@
         data: () => ({
              newCharacter:{
                 name: '',
+                age : ''
              },
              chars : ['Luffy','Zoro','Nami'],
              favorites: [],
+             favoritesList : [],
              persons: {
                     chars : [
                        {name: 'Luffy',age: 18},
@@ -68,10 +76,18 @@
         methods:{
             addCharToFavorite(character){
                 this.favorites.push(character)
+                console.log('favorites list', this.favorites)
+            },
+            removeFavorite(char){
+                console.log(char.name)
+                this.favorites.shift();
             },
             addNewCharacter(){
-                this.chars.push(this.newCharacter.name)
-                this.newCharacter = {name: ''}
+                console.log(this.newCharacter.name)
+                this.persons.chars.push({
+                    name: this.newCharacter.name,
+                    age: this.newCharacter.age
+                })
             }
         }
     })
