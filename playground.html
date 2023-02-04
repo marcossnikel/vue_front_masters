@@ -9,6 +9,7 @@
   <body>
     
     <div id="app">
+      <input type="file" id="input_test" @submit="showDataInput">
       <h1>{{displayTitle}}</h1>
       <p :data-increment-by="incrementAmount">Count : {{count}}</p>
       <button @click="incrementCount(count,incrementAmount,$event)">Increment Count</button>
@@ -109,6 +110,10 @@
           },
           optimizedIncrementAmount(){
             return this.displayTitle.length * this.incrementAmount
+          },
+          showDataInput(){
+            let input = document.getElementById('input_test');
+            console.log(input.files[0])
           }
         },
         watch:{
