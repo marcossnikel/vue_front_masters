@@ -9,7 +9,51 @@
   <body>
     
     <div id="app">
-      <input type="file" id="input_test" @submit="showDataInput">
+
+      <h2>Characters</h2>
+
+
+
+
+        <p>{{chars}}</p>
+        <pre>
+            {{newCharacter}}
+        </pre>
+            <label for="charName">Character Name</label>
+            <input type="text" id="charName" v-model="newCharacter.name"
+            @keyup.enter="addNewCharacter">
+            <label for="">Age</label>
+            <input type="text" id="charName" v-model="newCharacter.age"
+            @keyup.enter="addNewCharacter">
+            <!-- <button @click="addNewChar(chars,newCharacter,$event)">Add New Char </button> -->
+        <p v-if="persons.show == true">No persons bro</p>
+        
+        <p v-else v-for=" (person) in persons.chars">Name : {{person.name}} <br> Age : {{person.age}}
+        <button @click="addCharToFavorite(person)">Favorite Char</button>
+        </p>
+        <div>
+            <h3>Favorite Chacracters</h3>
+            <ul>
+                <li v-for="(char) in favorites">
+                    {{char.name}}
+                <button @click="removeFavorite(char)">Remove Favorite</button>
+                </li>
+            </ul>
+        </div>
+
+    <p>
+        <span v-for="(char,index) in persons.chars">
+            {{char.name}}{{index == persons.chars.length -1 ? "" : ","}}
+        </span>
+    </p>
+
+
+
+
+
+
+
+      <br><br><br><br><br><br><br><br><br>
       <h1>{{displayTitle}}</h1>
       <p :data-increment-by="incrementAmount">Count : {{count}}</p>
       <button @click="incrementCount(count,incrementAmount,$event)">Increment Count</button>
@@ -48,20 +92,49 @@
           return {
             newCharacter:{
                 name: '',
-                age : ''
+                age : '',
+                powers : []
              },
              chars : ['Luffy','Zoro','Nami'],
              favorites: [],
              favoritesList : [],
              persons: {
                     chars : [
-                       {name: 'Luffy',age: 18},
-                       {name: 'Zoro', age:22},
-                       {name: 'Nami', age:22},
-                       {name: 'Sanji', age: 28},
-                       {name: 'Robin' , age: 31},
-                       {name: 'Usopp',age: 23},
-                       {name: 'Katakuri',age:54}
+                       {
+                        name: 'Luffy',
+                        age: 18,
+                        powers: ['Gum', 'Haki','Haoshoku']
+                       },
+                       {
+                        name: 'Zoro', 
+                        age:22,
+                        powers: ['Sword', 'Haki', 'Strengh']
+                      },
+                       {
+                        name: 'Nami', 
+                        age:22,
+                        powers : ['Lightning', 'Zeus']
+                      },
+                       {
+                        name: 'Sanji', 
+                        age: 28,
+                        powers: ['Kick' , 'Haki' ,'DNA']
+                      },
+                      {
+                       name: 'Robin' , 
+                       age: 31,
+                       powers: ['Knowledge', 'Akuma no Mi']
+                      },
+                       {
+                        name: 'Usopp',
+                        age: 23,
+                        powers: ['Vision', 'Toxic Plants']
+                      },
+                       {
+                        name: 'Katakuri',
+                        age:54,
+                        powers: ['Vision Haki', 'Akuma no Mi']
+                      }
                     ],
                     show : false
             }, 
@@ -92,14 +165,6 @@
                list: [1,2,3] }]
           }
         },
-        methods: {
-          incrementCount(count,newAmount,event){
-            console.log(count)
-            console.log(newAmount)
-            console.log(event)
-            this.count += this.optimizedIncrementAmount
-          },
-        },
         computed:{
           displayTitle(){
             if (this.count > 20){
@@ -111,10 +176,29 @@
           optimizedIncrementAmount(){
             return this.displayTitle.length * this.incrementAmount
           },
-          showDataInput(){
-            let input = document.getElementById('input_test');
-            console.log(input.files[0])
-          }
+        },
+        methods: {
+          incrementCount(count,newAmount,event){
+            console.log(count)
+            console.log(newAmount)
+            console.log(event)
+            this.count += this.optimizedIncrementAmount
+          },
+          addCharToFavorite(character){
+                this.favorites.push(character)
+                console.log('favorites list', this.favorites)
+            },
+          removeFavorite(char){
+                console.log(char.name)
+                this.favorites.shift();
+            },
+          addNewCharacter(){
+                console.log(this.newCharacter.name)
+                this.persons.chars.push({
+                    name: this.newCharacter.name,
+                    age: this.newCharacter.age
+                })
+            }
         },
         watch:{
           // count(newValue){
