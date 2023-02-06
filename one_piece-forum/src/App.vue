@@ -6,7 +6,6 @@ export default {
       newCharacter: {
         name: "",
         age: "",
-        powers: [],
       },
       chars: ["Luffy", "Zoro", "Nami"],
       favorites: [],
@@ -111,7 +110,9 @@ export default {
         Lightning: 0,
       };
       this.persons.chars.forEach((character) => {
+        if (!character) return null;
         possiblePowers.forEach((powers) => {
+          if (!character.powers) return null;
           if (character.powers.indexOf(powers) > -1) {
             statistics[powers] += 1;
           }
@@ -143,6 +144,7 @@ export default {
         name: this.newCharacter.name,
         age: this.newCharacter.age,
       });
+      console.log(this.persons);
     },
   },
   watch: {
@@ -157,7 +159,10 @@ export default {
   <div>
     <h2>Statistics</h2>
     <ul>
-      <li v-for="(stats, power, idx) in powerStatistics" :key="`stats${idx}`">
+      <li
+        v-for="(stats, power) in powerStatistics"
+        :key="`stats${stats},${power}`"
+      >
         {{ power }}: {{ stats }}
       </li>
     </ul>
@@ -181,8 +186,6 @@ export default {
       v-model="newCharacter.age"
       @keyup.enter="addNewCharacter"
     />
-    <label for="">Powers</label>
-    <input type="text" id="charName" v-model="newCharacter.powers" />
     <!-- <button @click="addNewChar(chars,newCharacter,$event)">Add New Char </button> -->
     <p v-if="persons.show == true">No persons bro</p>
 
