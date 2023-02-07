@@ -10,6 +10,7 @@ export default {
       default: "Lunch",
     },
   },
+  emits: ["change-name"],
 };
 </script>
 
@@ -17,5 +18,6 @@ export default {
   <div>
     <h1>User : {{ name }}</h1>
     <p>Favorite Food: {{ food }}</p>
+    <button @click="$emit('change-name')">Change Name</button>
   </div>
 </template>
