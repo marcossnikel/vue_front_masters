@@ -1,9 +1,11 @@
 <script>
+import BaseButton from "./components/BaseButton.vue";
 import Counter from "./components/BaseCounter.vue";
 import LearningListCounter from "./components/LearningListCounter.vue";
 import OnePieceComponent from "./components/OnePieceComponent.vue";
 import StatisticsModule from "./components/StatisticsModule.vue";
 import UserCard from "./components/UserCard.vue";
+import BaseLayout from "./components/BaseLayout.vue";
 
 export default {
   components: {
@@ -12,6 +14,8 @@ export default {
     LearningListCounter,
     StatisticsModule,
     UserCard,
+    BaseButton,
+    BaseLayout,
   },
 
   data: () => ({
@@ -61,20 +65,36 @@ export default {
       ],
     },
     userData: {
-      name: "marko",
+      name: "Nickel",
       preferredFramework: "vue",
       favoriteFood: "meat",
       favoriteNumber: [7, 14, 21],
     },
   }),
   computed: {},
+  methods: {
+    changeName() {
+      this.userData.name = "Livia";
+    },
+  },
 };
 </script>
 
 <template>
   <div>
-    <user-card :name="userData.name" :food="userData.favoriteFood" />
-    <counter />
+    <base-layout>
+      <template v-slot:sidebar> Aside </template>
+      <template v-slot:main>
+        <user-card
+          :name="userData.name"
+          :food="userData.favoriteFood"
+          @change-name="changeName"
+        />
+      </template>
+      <template v-slot:footer> <counter /> </template>
+    </base-layout>
+    <base-button :left="true"></base-button>
+
     <one-piece-component :charsProp="persons.chars" />
     <learning-list-counter />
     <statistics-module :characters="persons.chars" />
