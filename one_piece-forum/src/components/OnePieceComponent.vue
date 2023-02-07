@@ -1,5 +1,7 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <script>
 export default {
+  props: ["charsProp"],
   data: () => ({
     newCharacter: {
       name: "",
@@ -8,51 +10,6 @@ export default {
     chars: ["Luffy", "Zoro", "Nami"],
     favorites: [],
     favoritesList: [],
-    persons: {
-      chars: [
-        {
-          name: "Luffy",
-          age: 18,
-          powers: ["Gum", "Haki", "Haoshoku", "Lightning"],
-        },
-        {
-          name: "Zoro",
-          age: 22,
-          powers: ["Sword", "Haki", "Strengh", "Haoshoku"],
-        },
-        {
-          name: "Nami",
-          age: 22,
-          powers: ["Lightning", "Zeus"],
-        },
-        {
-          name: "Sanji",
-          age: 28,
-          powers: ["Kick", "Haki", "DNA"],
-        },
-        {
-          name: "Robin",
-          age: 31,
-          powers: ["Knowledge", "Akuma no Mi", "Vision"],
-        },
-        {
-          name: "Usopp",
-          age: 23,
-          powers: ["Vision", "Toxic Plants"],
-        },
-        {
-          name: "Katakuri",
-          age: 54,
-          powers: [
-            "Vision Haki",
-            "Akuma no Mi",
-            "Knowledge",
-            "Vision",
-            "Haoshoku",
-          ],
-        },
-      ],
-    },
   }),
   methods: {
     addCharToFavorite(character) {
@@ -65,51 +22,19 @@ export default {
     },
     addNewCharacter() {
       console.log(this.newCharacter.name);
-      this.persons.chars.push({
+      this.charsProp.push({
         name: this.newCharacter.name,
         age: this.newCharacter.age,
       });
       console.log(this.persons);
     },
   },
-  computed: {
-    powerStatistics() {
-      const possiblePowers = ["Haoshoku", "Haki", "Vision", "Lightning"];
-
-      const statistics = {
-        Haoshoku: 0,
-        Haki: 0,
-        Vision: 0,
-        Lightning: 0,
-      };
-      this.persons.chars.forEach((character) => {
-        if (!character) return null;
-        possiblePowers.forEach((powers) => {
-          if (!character.powers) return null;
-          if (character.powers.indexOf(powers) > -1) {
-            statistics[powers] += 1;
-          }
-        });
-      });
-
-      return statistics;
-    },
-  },
+  computed: {},
 };
 </script>
 
 <template>
   <div>
-    <h2>Statistics</h2>
-    <ul>
-      <li
-        v-for="(stats, power) in powerStatistics"
-        :key="`stats${stats},${power}`"
-      >
-        {{ power }}: {{ stats }}
-      </li>
-    </ul>
-
     <h2>Characters</h2>
     <p>{{ chars }}</p>
     <pre>
@@ -131,12 +56,11 @@ export default {
       @keyup.enter="addNewCharacter"
     />
     <!-- <button @click="addNewChar(chars,newCharacter,$event)">Add New Char </button> -->
-    <p v-if="persons.show == true">No persons bro</p>
 
-    <p v-else v-for="(person, index) in persons.chars" :key="`item${index}`">
-      Name : {{ person.name }} <br />
-      Age : {{ person.age }}
-      <button @click="addCharToFavorite(person)">Favorite Char</button>
+    <p v-for="(charsProp, index) in charsProp" :key="`item${index}`">
+      Name : {{ charsProp.name }} <br />
+      Age : {{ charsProp.age }}
+      <button @click="addCharToFavorite(charsProp)">Favorite Char</button>
     </p>
     <div>
       <h3>Favorite Chacracters</h3>
@@ -149,8 +73,8 @@ export default {
     </div>
 
     <p>
-      <span v-for="(char, index) in persons.chars" :key="`char${index}`">
-        {{ char.name }}{{ index == persons.chars.length - 1 ? "" : "," }}
+      <span v-for="(char, index) in charsProp" :key="`char${index}`">
+        {{ char.name }}{{ index == charsProp.length - 1 ? "" : "," }}
       </span>
     </p>
   </div>
