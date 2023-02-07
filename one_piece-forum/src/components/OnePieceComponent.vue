@@ -1,6 +1,8 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <script>
+import CharacterCard from "./CharacterCard.vue";
 export default {
+  components: { CharacterCard },
   props: ["charsProp"],
   data: () => ({
     newCharacter: {
@@ -8,14 +10,9 @@ export default {
       age: "",
     },
     chars: ["Luffy", "Zoro", "Nami"],
-    favorites: [],
     favoritesList: [],
   }),
   methods: {
-    addCharToFavorite(character) {
-      this.favorites.push(character);
-      console.log("favorites list", this.favorites);
-    },
     removeFavorite(char) {
       console.log(char.name);
       this.favorites.shift();
@@ -27,6 +24,10 @@ export default {
         age: this.newCharacter.age,
       });
       console.log(this.persons);
+    },
+    addFavoriteCharacter(payload) {
+      console.log(this.favoritesList);
+      this.favoritesList.push(payload);
     },
   },
   computed: {},
@@ -58,16 +59,20 @@ export default {
     <!-- <button @click="addNewChar(chars,newCharacter,$event)">Add New Char </button> -->
 
     <p v-for="(charsProp, index) in charsProp" :key="`item${index}`">
-      Name : {{ charsProp.name }} <br />
-      Age : {{ charsProp.age }}
-      <button @click="addCharToFavorite(charsProp)">Favorite Char</button>
+      <character-card :character="charsProp" @favorite="addFavoriteCharacter" />
     </p>
     <div>
       <h3>Favorite Chacracters</h3>
       <ul>
-        <li v-for="(char, index) in favorites" :key="`char${index}`">
-          {{ char.name }}
-          <button @click="removeFavorite(char)">Remove Favorite</button>
+        <li
+          v-for="(char, index) in favoritesList"
+          :key="`char${index}`"
+          style="list-style-type: none"
+        >
+          <p>
+            Name : {{ char.name }} <br />
+            Age : {{ char.age }}
+          </p>
         </li>
       </ul>
     </div>
