@@ -12,6 +12,9 @@ export default {
       ).then((res) => res.json());
     },
   },
+  created() {
+    this.fetchPokemon();
+  },
 };
 </script>
 
