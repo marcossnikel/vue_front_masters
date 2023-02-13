@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/require-prop-type-constructor -->
 <script>
 export default {
   props: {
