@@ -75,6 +75,7 @@ export default {
   methods: {
     changeName() {
       this.userData.name = "Livia";
+      this.userData.favoriteFood = "Macarrão";
     },
   },
 };
@@ -83,17 +84,17 @@ export default {
 <template>
   <div>
     <base-layout>
-      <template v-slot:sidebar> Aside </template>
-      <template v-slot:main>
+      <template #sidebar> Aside </template>
+      <template #main>
         <user-card
           :name="userData.name"
           :food="userData.favoriteFood"
           @change-name="changeName"
         />
       </template>
-      <template v-slot:footer> <counter /> </template>
+      <template #footer> <counter /> </template>
     </base-layout>
-    <base-button :left="true"></base-button>
+    <base-button> {{ userData.name }}</base-button>
 
     <one-piece-component :charsProp="persons.chars" />
     <learning-list-counter />
