@@ -1,6 +1,5 @@
 <script>
 import UserCard from "./UserCard.vue";
-import axios from "axios";
 export default {
   data: () => ({
     userList: [],
